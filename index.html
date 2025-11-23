@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Campus Connect — Pocket Wi-Fi Rental</title>
+  <style>
+    :root {
+      --bg: #f7fafc;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --accent: #0ea5e9;
+      --shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 28px auto;
+      padding: 18px;
+    }
+
+    header {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      background: var(--card);
+      border-radius: 10px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .logo {
+      width: 74px;
+      height: 74px;
+      border-radius: 10px;
+      overflow: hidden;
+      flex: 0 0 74px;
+      background: #e6eef6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #0369a1;
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: -0.2px;
+    }
+
+    .title p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .service-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+    }
+
+    .section h2 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+    }
+
+    .specs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 8px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .specs div {
+      background: #fbfdff;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #eef2f7;
+    }
+
+    .how {
+      margin-top: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .plans {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .plan {
+      border-radius: 10px;
+      padding: 12px;
+      min-width: 130px;
+      background: #fbfdff;
+      border: 1px solid #e6eef6;
+      box-shadow: 0 2px 8px rgba(2, 6, 23, 0.03);
+    }
+
+    .plan strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .plan .price {
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
+    /* order button */
+    .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: white;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn.secondary {
+      background: #111827;
+      opacity: 0.9;
+    }
+
+    /* chat */
+    .chat-btn {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 999px;
+      width: 56px;
+      height: 56px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .chat-panel {
+      position: fixed;
+      right: 18px;
+      bottom: 86px;
+      width: 340px;
+      max-height: 520px;
+      background: var(--card);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      padding: 12px 14px;
+      border-bottom: 1px solid #eef2f7;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chat-messages {
+      padding: 12px;
+      overflow-y: auto;
+      flex: 1;
+      background: #fbfdff;
+    }
+
+    .msg {
+      max-width: 78%;
+      margin-bottom: 10px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .msg.me {
+      margin-left: auto;
+      background: #0f172a;
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    .msg.their {
+      margin-right: auto;
+      background: #f1f5f9;
+      color: #0f172a;
+      border-bottom-left-radius: 4px;
+    }
+
+    .chat-input {
+      display: flex;
+      gap: 8px;
+      padding: 10px;
+      border-top: 1px solid #eef2f7;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 9px 10px;
+      border-radius: 8px;
+      border: 1px solid #e6eef6;
+      outline: none;
+      font-size: 13px;
+    }
+
+    .chat-input button {
+      background: #111827;
+      color: white;
+      border: none;
+      padding: 9px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* modal order form */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal {
+      width: 460px;
+      max-width: 94%;
+      background: var(--card);
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .field {
+      margin-bottom: 10px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: var(--muted);
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 9px 10px;
+      border-radius: 8px;
+      border: 1px solid #e6eef6;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    @media (max-width:900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .chat-panel {
+        right: 12px;
+        left: 12px;
+        width: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">CC</div>
+      <div class="title">
+        <h1>Campus Connect</h1>
+        <p>Pocket Wi-Fi rental for Sorsogon State University students</p>
+      </div>
+    </header>
+
+    <div class="hero" style="margin-top:18px;">
+      <div class="card section">
+        <!-- replace src with your image file or URL -->
+        <img class="service-img" src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=ad8bfe1b80f2b2a3d6da1aa7d6b8f5a9" alt="Pocket Wi-Fi">
+
+        <h2 style="margin-top:12px;">Service Overview</h2>
+        <div class="specs" style="margin-top:8px;">
+          <div><strong>Rental rate</strong>
+            <div class="small">₱99 for 3 days (Light plan)</div>
+          </div>
+          <div><strong>Connection speed</strong>
+            <div class="small">15–25 Mbps (may vary)</div>
+          </div>
+          <div><strong>Data provider</strong>
+            <div class="small">Globe / Smart / Dito</div>
+          </div>
+          <div><strong>Coverage</strong>
+            <div class="small">Sorsogon State University and nearby</div>
+          </div>
+          <div><strong>Battery life</strong>
+            <div class="small">8–10 hours per full charge</div>
+          </div>
+          <div><strong>Add-on load</strong>
+            <div class="small">₱50 top-up available for extended use</div>
+          </div>
+        </div>
+
+        <div class="how">
+          <h2 style="margin-top:12px;">Plans</h2>
+          <div class="plans">
+            <div class="plan">
+              <strong>Light Plan</strong>
+              <div class="small">Good for 1–2 devices</div>
+              <div class="price">₱99 for 3 days</div>
+              <div class="small">3–5GB data, light use only</div>
+            </div>
+            <div class="plan">
+              <strong>Standard Plan</strong>
+              <div class="small">Up to 5 devices</div>
+              <div class="price">₱149 for 3 days</div>
+              <div class="small">8–10GB data, best-balanced option</div>
+            </div>
+            <div class="plan">
+              <strong>Heavy Use Plan</strong>
+              <div class="small">For orgs, group work, dorms</div>
+              <div class="price">₱169–₱199 for 3 days</div>
+              <div class="small">12–15GB data</div>
+            </div>
+          </div>
+
+          <h2 style="margin-top:12px;">How it works</h2>
+          <ol style="padding-left:18px; margin-top:6px; color:var(--muted);">
+            <li>Message or visit Campus Connect website or Facebook page to check available unit.</li>
+            <li>Pay the rental fee and sign the borrower's form.</li>
+            <li>Use the wifi unit for 3 days.</li>
+            <li>Return the device in good condition.</li>
+          </ol>
+          <p class="small" style="margin-top:8px;">Payment method: Cash or GCash. Email: connectcampus24@gmail.com</p>
+
+          <div class="actions">
+            <button class="btn" id="availBtn">Avail Service</button>
+            <button class="btn secondary" id="seeUnits" onclick="alert('Units available: 3 (example)')">Check units</button>
+          </div>
+        </div>
+
+        <!-- Terms & Conditions -->
+        <div style="margin-top:14px;">
+          <h2>Terms and Conditions / Contract</h2>
+          <ul style="color:var(--muted); margin-top:8px; padding-left:18px; line-height:1.6;">
+            <li>Renter must show school ID.</li>
+            <li>Rental fee must be paid before receiving the device.</li>
+            <li>Unit must be returned on the agreed date and time.</li>
+            <li>Late return has additional charge.</li>
+            <li>Damaged or lost units must be paid by the renter.</li>
+          </ul>
+        </div>
+      </div>
+
+      <aside class="card">
+        <h2>Quick contact</h2>
+        <p class="small">Use the chat below to ask about availability or to reserve. You can also click Avail Service to submit a reservation.</p>
+
+        <div style="margin-top:12px;">
+          <strong>Contact</strong>
+          <div class="small" style="margin-top:6px;">Email: connectcampus24@gmail.com</div>
+          <div class="small" style="margin-top:4px;">Service hours: Monday to Friday</div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <strong>Rates</strong>
+          <div class="small" style="margin-top:6px;">Light ₱99 · Standard ₱149 · Heavy ₱169–₱199</div>
+          <div class="small" style="margin-top:6px;">Add-on load: ₱50</div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>© Campus Connect — Student led pocket Wi-Fi rental</footer>
+  </div>
+
+  <!-- Chat button and panel -->
+  <button class="chat-btn" id="openChat" title="Chat">💬</button>
+
+  <div id="chatPanel" class="chat-panel" style="display:none;">
+    <div class="chat-header">
+      <div><strong>Campus Connect chat</strong>
+        <div style="font-size:12px;color:var(--muted)">Ask about availability or reserve</div>
+      </div>
+      <div><button id="closeChat" style="border:none;background:transparent;cursor:pointer;font-size:16px;color:var(--muted)">✕</button></div>
+    </div>
+
+    <div id="messages" class="chat-messages" aria-live="polite"></div>
+
+    <div class="chat-input">
+      <input id="chatName" placeholder="Your name (optional)" />
+      <input id="chatText" placeholder="Type a message" />
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+
+  <!-- Modal order form (simple local save) -->
+  <div id="modalRoot" style="display:none"></div>
+
+  <script>
+    // ---------- Simple modal form for Avail Service ----------
+    document.getElementById('availBtn').addEventListener('click', openModal);
+
+    function openModal() {
+      var html = '' +
+        '<div class="modal-backdrop" id="mb">' +
+        '<div class="modal" role="dialog" aria-modal="true">' +
+        '<h3 style="margin-top:0">Reserve Pocket Wi-Fi</h3>' +
+        '<div class="field"><label>Name</label><input id="m_name" placeholder="Full name"></div>' +
+        '<div class="field"><label>School ID (show on pickup)</label><input id="m_school" placeholder="School ID number, e.g. 2021-12345"></div>' +
+        '<div class="field"><label>Contact (phone or GCash)</label><input id="m_contact" placeholder="0917xxxxxxx or email"></div>' +
+        '<div class="field"><label>Select plan</label>' +
+        '<select id="m_plan" onchange="updateAmountFromPlan()">' +
+        '<option value="light" data-amount="99">Light Plan — ₱99 (3–5GB)</option>' +
+        '<option value="standard" data-amount="149">Standard Plan — ₱149 (8–10GB)</option>' +
+        '<option value="heavy169" data-amount="169">Heavy Plan — ₱169 (12GB)</option>' +
+        '<option value="heavy199" data-amount="199">Heavy Plan — ₱199 (15GB)</option>' +
+        '</select>' +
+        '</div>' +
+        '<div class="field"><label>Payment method</label><select id="m_pay"><option>GCash</option><option>Cash on pickup</option></select></div>' +
+        '<div class="field"><label>Notes (optional)</label><textarea id="m_notes" rows="2" placeholder="Pickup time, add-on, etc."></textarea></div>' +
+        '<div class="field small">Add-on top-up: ₱50 available at pickup.</div>' +
+        '<div class="field"><label><input type="checkbox" id="m_terms"> I agree to the Terms and Conditions / Contract</label></div>' +
+        '<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px;">' +
+        '<button onclick="closeModal()" style="padding:8px 10px;border-radius:8px;border:1px solid #e6eef6;background:white;cursor:pointer">Cancel</button>' +
+        '<button onclick="submitOrder()" class="btn" style="padding:8px 12px;">Submit reservation</button>' +
+        '</div>' +
+        '<div class="small" style="margin-top:8px;color:var(--muted)">Note: Renter must show school ID on pickup. Rental fee must be paid before receiving the device.</div>' +
+        '</div>' +
+        '</div>';
+      var root = document.getElementById('modalRoot');
+      root.innerHTML = html;
+      root.style.display = 'block';
+      updateAmountFromPlan();
+    }
+
+    function closeModal() {
+      var root = document.getElementById('modalRoot');
+      root.innerHTML = '';
+      root.style.display = 'none';
+    }
+
+    function updateAmountFromPlan() {
+      var sel = document.getElementById('m_plan');
+      if (!sel) return;
+      var opt = sel.options[sel.selectedIndex];
+      var amt = opt.getAttribute('data-amount') || '0';
+      // show amount in submit button (optional)
+      var btn = document.querySelector('#modalRoot .btn');
+      if (btn) btn.textContent = 'Submit reservation (₱' + amt + ')';
+    }
+
+    function submitOrder() {
+      var name = document.getElementById('m_name').value.trim();
+      var school = document.getElementById('m_school').value.trim();
+      var contact = document.getElementById('m_contact').value.trim();
+      var planSel = document.getElementById('m_plan');
+      var planText = planSel.options[planSel.selectedIndex].text;
+      var amount = parseInt(planSel.options[planSel.selectedIndex].getAttribute('data-amount') || 0, 10);
+      var pay = document.getElementById('m_pay').value;
+      var notes = document.getElementById('m_notes').value.trim();
+      var agreed = document.getElementById('m_terms').checked;
+      if (!name || !school || !contact) {
+        alert('Please enter name, school ID, and contact');
+        return;
+      }
+      if (!agreed) {
+        alert('Please agree to the Terms and Conditions');
+        return;
+      }
+      var order = {
+        name: name,
+        schoolID: school,
+        contact: contact,
+        plan: planText,
+        amount: amount,
+        payment: pay,
+        notes: notes,
+        created: Date.now()
+      };
+      // Save locally in browser. In production send to server or email.
+      var saved = JSON.parse(localStorage.getItem('cc_orders') || '[]');
+      saved.push(order);
+      localStorage.setItem('cc_orders', JSON.stringify(saved));
+      closeModal();
+      alert('Reservation saved locally. We will contact you to confirm. Amount: ₱' + amount + '\\nPlease be ready to show your school ID on pickup.');
+    }
+    // ---------- Simple chat widget that saves to localStorage ----------
+    var openChatBtn = document.getElementById('openChat');
+    var chatPanel = document.getElementById('chatPanel');
+    var closeChat = document.getElementById('closeChat');
+    var messagesEl = document.getElementById('messages');
+    var sendBtn = document.getElementById('sendBtn');
+    var chatText = document.getElementById('chatText');
+    var chatName = document.getElementById('chatName');
+    openChatBtn.addEventListener('click', function() {
+      chatPanel.style.display = 'flex';
+      openChatBtn.style.display = 'none';
+      renderMessages();
+    });
+    closeChat.addEventListener('click', function() {
+      chatPanel.style.display = 'none';
+      openChatBtn.style.display = 'flex';
+    });
+
+    function loadMessages() {
+      return JSON.parse(localStorage.getItem('cc_chat') || '[]');
+    }
+
+    function saveMessages(arr) {
+      localStorage.setItem('cc_chat', JSON.stringify(arr));
+    }
+
+    function renderMessages() {
+      messagesEl.innerHTML = '';
+      var msgs = loadMessages();
+      if (msgs.length === 0) {
+        var p = document.createElement('div');
+        p.className = 'small';
+        p.style.color = '#94a3b8';
+        p.textContent = 'No messages yet. Ask about availability or reserve.';
+        messagesEl.appendChild(p);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+        return;
+      }
+      msgs.forEach(function(m) {
+        var d = document.createElement('div');
+        d.className = 'msg ' + (m.me ? 'me' : 'their');
+        var name = m.name ? m.name + ' • ' : '';
+        d.innerHTML = '<div style="font-size:11px;opacity:0.8;margin-bottom:6px;">' + escapeHtml(name) + timeAgo(m.created) + '</div><div>' + escapeHtml(m.text) + '</div>';
+        messagesEl.appendChild(d);
+      });
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+    sendBtn.addEventListener('click', sendMessage);
+    chatText.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    function sendMessage() {
+      var text = chatText.value.trim();
+      var name = chatName.value.trim() || 'Guest';
+      if (!text) return;
+      var msgs = loadMessages();
+      var m = {
+        name: name,
+        text: text,
+        created: Date.now(),
+        me: true
+      };
+      msgs.push(m);
+      saveMessages(msgs);
+      chatText.value = '';
+      renderMessages();
+      autoReplyIfNeeded(text);
+    }
+    // simple bot replies for common questions
+    function autoReplyIfNeeded(text) {
+      var t = text.toLowerCase();
+      var reply = null;
+      if (t.includes('available') || t.includes('availability')) reply = 'Units available (example): 3. You can reserve using the Avail Service button.';
+      if (t.includes('price') || t.includes('rate')) reply = 'Rates: Light ₱99 · Standard ₱149 · Heavy ₱169–₱199. Add-on ₱50.';
+      if (t.includes('pickup') || t.includes('where')) reply = 'Pickup at Sorsogon State University - Main Campus. We will confirm pickup details after reservation.';
+      if (t.includes('payment') || t.includes('gcash')) reply = 'Payment methods: Cash or GCash. We will send GCash details when you reserve.';
+      if (reply) {
+        setTimeout(function() {
+          var msgs = loadMessages();
+          msgs.push({
+            name: 'Campus Connect',
+            text: reply,
+            created: Date.now(),
+            me: false
+          });
+          saveMessages(msgs);
+          renderMessages();
+        }, 700);
+      }
+    }
+    // small helpers
+    function escapeHtml(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function timeAgo(ts) {
+      var d = Date.now() - ts;
+      if (d < 60000) return 'just now';
+      if (d < 3600000) return Math.floor(d / 60000) + 'm';
+      if (d < 86400000) return Math.floor(d / 3600000) + 'h';
+      return Math.floor(d / 86400000) + 'd';
+    }
+    // pre-render if chat open
+    if (chatPanel.style.display === 'flex') {
+      renderMessages();
+    }
+  </script>
+</body>
+
+</html>
